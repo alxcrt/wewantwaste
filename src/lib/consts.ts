@@ -1,2 +1,4 @@
-export const SKIP_API_URL =
-  "https://app.wewantwaste.co.uk/api/skips/by-location?postcode=NR32&area=Lowestoft";
+// export const SKIP_API_URL =
+//   "https://app.wewantwaste.co.uk/api/skips/by-location?postcode=NR32&area=Lowestoft";
+
+export const SKIP_API_URL = `https://app.wewantwaste.co.uk/api/skips/by-location?postcode=LE10&area=Hinckley`;
