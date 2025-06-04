@@ -1,11 +1,11 @@
 import React from "react";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 
 const Card = ({ className, ...rest }: React.ComponentProps<"div">) => {
   return (
     <div
       className={cn(
-        "rounded-lg shadow-md border-2 border-gray-200 flex flex-col p-4",
+        "rounded-lg shadow-md border-2 border-gray-200 flex flex-col p-4 bg-white",
         className
       )}
       {...rest}

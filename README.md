@@ -14,6 +14,9 @@ This project is a redesigned version of the "choose your skip size" page from We
 - v0.1.0: Initial version with basic functionality
 
   ![v0.1.0 demo](./assets/v0.1.0.gif)
+- v0.2.0: Added Tinder-style view mode
+
+  ![v0.2.0 demo](./assets/v0.2.0.gif)
 
 
 ## Data Structure

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SkipContext } from "../providers/skip-provider";
+import { SkipContext } from "@/providers/skip-provider";
 
 export function useSkip() {
   const context = useContext(SkipContext);

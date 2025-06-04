@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: Geist;
+  font-display: swap;
+  src: url("/src/assets/fonts/Geist/webfonts/Geist-Regular.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: GeistMono;
+  font-display: swap;
+  src: url("/src/assets/fonts/GeistMono/webfonts/GeistMono-Regular.woff2")
+    format("woff2");
+}
+
+@theme {
+  --font-sans: Geist, sans-serif;
+  --font-mono: GeistMono, monospace;
+}
+
+body {
+  @apply font-mono;
+}
