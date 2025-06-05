@@ -22,7 +22,7 @@ export default function SkipCard({ skip }: SkipCardProps) {
     console.log(x.get());
     if (x.get() < -50) {
       const newSkips = skips.filter((item) => item.id !== skip.id);
-      setSkips(newSkips);
+      setSkips([skip, ...newSkips]);
       selectSkip(null);
     } else if (x.get() > 50) {
       selectSkip(skip);
@@ -42,7 +42,6 @@ export default function SkipCard({ skip }: SkipCardProps) {
       layout
       initial={false}
       transition={spring}
-      key={skip.id}
       drag={viewMode === "tinder" ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
       className={`${
@@ -63,7 +62,6 @@ export default function SkipCard({ skip }: SkipCardProps) {
       layoutId={`skip-card-${skip.id}`}
     >
       <Card
-        key={skip.id}
         onClick={() =>
           viewMode !== "tinder"
             ? selectedSkip?.id === skip.id

@@ -32,7 +32,7 @@ const SkipProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const setSkips = useCallback((skips: Skip[]) => {
-    _setSkips(skips.sort((a, b) => b.size - a.size));
+    _setSkips(skips);
   }, []);
 
   // Update selectedSkip reference when skips change

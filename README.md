@@ -19,6 +19,7 @@ This project is a redesigned version of the "choose your skip size" page from We
 - Tinder mode allows you to swipe left or right to select or dismiss a skip
 - Grid mode allows you to select a skip by clicking on it
 - Skips are sorted by size in descending order
+- Infinite loop of skips in tinder mode
 
 
 ## Approach
@@ -33,8 +34,3 @@ This project is a redesigned version of the "choose your skip size" page from We
 - v0.3.0: UI/UX improvements
 
   ![v0.3.0 demo](./assets/v0.3.0.gif)
-
-
-## Known Bugs
-
-- Tinder mode doesnt loop over the skips it just removes them from the array
