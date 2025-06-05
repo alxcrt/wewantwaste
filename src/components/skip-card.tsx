@@ -1,7 +1,10 @@
 import { Card, CardBody, CardFooter, CardHeader } from "./ui/card";
-import type { Skip } from "@/lib/utils";
+import { formatPrice, type Skip } from "@/lib/utils";
 import { useSkip } from "@/hooks/useSkip";
 import { motion, useMotionValue, useTransform } from "motion/react";
+import { SKIP_IMAGE_URL } from "@/lib/consts";
+import { ArrowRight, CheckCircle } from "lucide-react";
+import Badges from "./badges";
 
 interface SkipCardProps {
   skip: Skip;
@@ -16,12 +19,12 @@ export default function SkipCard({ skip }: SkipCardProps) {
   const rotate = useTransform(x, [-200, 0, 200], [-18, 0, 18]);
 
   const handleDragEnd = () => {
-    if (x.get() < 50) {
-      console.log(skip.id);
+    console.log(x.get());
+    if (x.get() < -50) {
       const newSkips = skips.filter((item) => item.id !== skip.id);
       setSkips(newSkips);
       selectSkip(null);
-    } else {
+    } else if (x.get() > 50) {
       selectSkip(skip);
     }
   };
@@ -42,9 +45,8 @@ export default function SkipCard({ skip }: SkipCardProps) {
       key={skip.id}
       drag={viewMode === "tinder" ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
-      className={`${
-        viewMode === "tinder" ? "row-1 col-1" : ""
-      } cursor-grab active:cursor-grabbing`}
+      className={`${viewMode === "tinder" ? "row-1 col-1" : ""}
+      cursor-grab active:cursor-grabbing`}
       style={{
         x,
         opacity,
@@ -66,27 +68,48 @@ export default function SkipCard({ skip }: SkipCardProps) {
             : undefined
         }
         className={`
-      ${selectedSkip?.id === skip.id ? "border-2 border-blue-500" : ""}`}
+          max-w-2xl mx-auto
+      ${selectedSkip?.id === skip.id ? "border-2 border-primary" : ""}`}
       >
-        <CardHeader>
-          <div className="w-full h-96 bg-gray-200">
-            <img
-              src="https://placehold.co/600x400"
-              alt="Skip"
-              className="w-full h-full object-cover"
-              draggable={false}
-            />
-          </div>
+        <CardHeader className="relative">
+          <img
+            src={SKIP_IMAGE_URL(skip.size)}
+            alt="Skip"
+            className="w-full h-48 object-cover rounded-xl"
+            draggable={false}
+            style={{ aspectRatio: "4/3" }}
+          />
+          <Badges size={skip.size} allowed_on_road={skip.allowed_on_road} />
         </CardHeader>
-        <CardBody>
-          <div>{skip.size} Yard Skip</div>
-          <div>{skip.hire_period_days} day hire period</div>
-          <div>{skip.price_before_vat}</div>
+        <CardBody className="space-y-2 py-2">
+          <p className="text-lg font-bold">{skip.size} Yard Skip</p>
+          <p className="text-sm text-neutral-500">
+            {skip.hire_period_days} day hire period
+          </p>
+          <p className="text-lg font-bold text-primary">
+            {formatPrice(skip.price_before_vat)}
+          </p>
         </CardBody>
-        <CardFooter>
-          <button className="cursor-pointer border-2 border-gray-200 rounded-md px-2 py-1">
-            {selectedSkip?.id === skip.id ? "Selected" : "Select this skip"}
-          </button>
+        <CardFooter className="flex flex-col gap-2">
+          {viewMode === "tinder" ? (
+            <div className="flex justify-center items-center text-xs text-neutral-500 mt-1">
+              <p>Swipe right to select, left to dismiss</p>
+            </div>
+          ) : (
+            <button className="cursor-pointer border-2 border-gray-200 rounded-md px-2 py-1 w-full flex items-center justify-center gap-2">
+              {selectedSkip?.id === skip.id ? (
+                <>
+                  <CheckCircle size={16} />
+                  <span>Selected</span>
+                </>
+              ) : (
+                <>
+                  <span>Select this skip</span>
+                  <ArrowRight size={16} />
+                </>
+              )}
+            </button>
+          )}
         </CardFooter>
       </Card>
     </motion.div>

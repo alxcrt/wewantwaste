@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useState, useEffect } from "react";
 import type { Skip } from "@/lib/utils";
 
 type SkipContextType = {
@@ -16,16 +16,34 @@ const SkipProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [skips, _setSkips] = useState<Skip[]>([]);
-  const [selectedSkip, setSelectedSkip] = useState<Skip | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "tinder">("grid");
+  const [selectedSkip, setSelectedSkip] = useState<Skip | null>(() => {
+    const savedSkip = localStorage.getItem("selectedSkip");
+    return savedSkip ? JSON.parse(savedSkip) : null;
+  });
+  const [viewMode, setViewMode] = useState<"grid" | "tinder">("tinder");
 
   const selectSkip = useCallback((skip: Skip | null) => {
     setSelectedSkip(skip);
+    if (skip) {
+      localStorage.setItem("selectedSkip", JSON.stringify(skip));
+    } else {
+      localStorage.removeItem("selectedSkip");
+    }
   }, []);
 
   const setSkips = useCallback((skips: Skip[]) => {
     _setSkips(skips.sort((a, b) => b.size - a.size));
   }, []);
+
+  // Update selectedSkip reference when skips change
+  useEffect(() => {
+    if (selectedSkip && skips.length > 0) {
+      const updatedSkip = skips.find((skip) => skip.id === selectedSkip.id);
+      if (updatedSkip) {
+        selectSkip(updatedSkip);
+      }
+    }
+  }, [skips, selectedSkip, selectSkip]);
 
   return (
     <SkipContext.Provider

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { SKIP_IMAGE_URL } from "./consts";
 export interface Skip {
   id: number;
   size: number;
@@ -20,4 +21,16 @@ export interface Skip {
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function formatPrice(price: number) {
+  return price.toLocaleString("en-GB", {
+    style: "currency",
+    currency: "GBP",
+    minimumFractionDigits: 0,
+  });
+}
+
+export function getSkipImageUrl(size: number) {
+  return SKIP_IMAGE_URL(size);
 }

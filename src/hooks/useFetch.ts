@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export default function useFetch<T>(url: string) {
+export default function useFetch<T>(url: string, options?: { delay?: number }) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -9,6 +9,12 @@ export default function useFetch<T>(url: string) {
     try {
       setLoading(true);
       setError(null);
+
+      // Add optional delay if specified
+      if (options?.delay) {
+        await new Promise((resolve) => setTimeout(resolve, options.delay));
+      }
+
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -22,7 +28,7 @@ export default function useFetch<T>(url: string) {
     } finally {
       setLoading(false);
     }
-  }, [url]);
+  }, [url, options?.delay]);
 
   return { data, loading, error, fetchData };
 }
