@@ -45,8 +45,12 @@ export default function SkipCard({ skip }: SkipCardProps) {
       key={skip.id}
       drag={viewMode === "tinder" ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
-      className={`${viewMode === "tinder" ? "row-1 col-1" : ""}
-      cursor-grab active:cursor-grabbing`}
+      className={`${
+        viewMode === "tinder"
+          ? "row-1 col-1 cursor-grab active:cursor-grabbing"
+          : "cursor-pointer"
+      }
+      `}
       style={{
         x,
         opacity,
