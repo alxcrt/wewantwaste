@@ -16,7 +16,7 @@ const SkipProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [skips, _setSkips] = useState<Skip[]>([]);
-  const [selectedSkip, setSelectedSkip] = useState<Skip | null>(() => {
+  const [selection, setSelectedSkip] = useState<Skip | null>(() => {
     const savedSkip = localStorage.getItem("selectedSkip");
     return savedSkip ? JSON.parse(savedSkip) : null;
   });
@@ -35,15 +35,12 @@ const SkipProvider: React.FC<{ children: React.ReactNode }> = ({
     _setSkips(skips);
   }, []);
 
-  // Update selectedSkip reference when skips change
+  // Current catalogue prices are derived directly; only browser storage needs
+  // synchronization when the catalogue refreshes.
+  const selectedSkip = skips.find(skip => skip.id === selection?.id) ?? selection;
   useEffect(() => {
-    if (selectedSkip && skips.length > 0) {
-      const updatedSkip = skips.find((skip) => skip.id === selectedSkip.id);
-      if (updatedSkip) {
-        selectSkip(updatedSkip);
-      }
-    }
-  }, [skips, selectedSkip, selectSkip]);
+    if (selectedSkip) localStorage.setItem("selectedSkip", JSON.stringify(selectedSkip));
+  }, [selectedSkip]);
 
   return (
     <SkipContext.Provider
