@@ -10,3 +10,6 @@ The privileged merge workflow never checks out or executes PR code. Keep the
 required Actions check and administrator enforcement enabled in branch
 protection. Coolify uses the existing deployment webhook and bounded builder.
 Back up state before migrations; an old image does not reverse a data migration.
+
+Coolify uses the existing GitHub App installation for the deployed `main` branch.
+The image and native probe use the IPv4 loopback health endpoint on port 3000.
