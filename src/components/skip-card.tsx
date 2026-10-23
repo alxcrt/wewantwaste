@@ -30,7 +30,7 @@ export default function SkipCard({ skip }: SkipCardProps) {
   };
 
   const spring = {
-    type: "spring",
+    type: "spring" as const,
     damping: 30,
     stiffness: 400,
     duration: 0.25,

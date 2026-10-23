@@ -5,14 +5,15 @@ export default function useFetch<T>(url: string, options?: { delay?: number }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const delay = options?.delay;
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       // Add optional delay if specified
-      if (options?.delay) {
-        await new Promise((resolve) => setTimeout(resolve, options.delay));
+      if (delay) {
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
 
       const response = await fetch(url);
@@ -28,7 +29,7 @@ export default function useFetch<T>(url: string, options?: { delay?: number }) {
     } finally {
       setLoading(false);
     }
-  }, [url, options?.delay]);
+  }, [url, delay]);
 
   return { data, loading, error, fetchData };
 }
